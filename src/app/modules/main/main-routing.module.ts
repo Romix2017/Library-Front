@@ -7,7 +7,8 @@ import { BooksComponent } from '../books/books/books.component';
 const routes: Routes = [
   {
     path: '', component: MainComponent, children: [
-      { path: '', loadChildren: () => import('../../modules/books/books.module').then(m => m.BooksModule) },
+      { path: '', redirectTo: 'books' },
+      { path: 'books', loadChildren: () => import('../../modules/books/books.module').then(m => m.BooksModule) },
       { path: 'books-history', loadChildren: () => import('../../modules/books-history/books-history.module').then(m => m.BooksHistoryModule) },
       { path: 'genres', loadChildren: () => import('../../modules/genres/genres.module').then(m => m.GenresModule) },
       { path: 'roles', loadChildren: () => import('../../modules/roles/roles.module').then(m => m.RolesModule) },

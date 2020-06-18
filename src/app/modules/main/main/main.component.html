@@ -1,6 +1,12 @@
 <mat-drawer-container>
   <mat-drawer mode="side" opened>
-    123
+    <div class="mat-but">
+      <a mat-raised-button routerLink="/books" routerLinkActive="mat-primary">Books</a>
+      <a mat-raised-button routerLink="/books-history" routerLinkActive="mat-primary">Books history</a>
+      <a mat-raised-button routerLink="/roles" routerLinkActive="mat-primary">Roles</a>
+      <a mat-raised-button routerLink="/users" routerLinkActive="mat-primary">Users</a>
+      <a mat-raised-button routerLink="/genres" routerLinkActive="mat-primary">Genres</a>
+    </div>
   </mat-drawer>
   <mat-drawer-content><router-outlet></router-outlet></mat-drawer-content>
 </mat-drawer-container>

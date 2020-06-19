@@ -34,8 +34,8 @@ export class Repository<T extends AbstractDTO> implements IRepository<T> {
   AddRange(entities: T[]) {
 
   }
-  Remove(entity: T) {
-
+  Remove(id: number): Observable<any> {
+    return this.http.delete(this.currentRoute.DeleteById(id))
   }
   RemoveRange(entities: T[]) {
 

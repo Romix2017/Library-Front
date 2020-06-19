@@ -5,6 +5,6 @@ export interface IRepository<T> {
   GetAll(): Observable<T[]>;
   Add(entity: T): void;
   AddRange(entities: T[]);
-  Remove(entity: T);
+  Remove(id: number): Observable<any>;
   RemoveRange(entities: T[]);
 }

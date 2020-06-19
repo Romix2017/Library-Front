@@ -1,1 +1,2 @@
 
+export const DELETE = "clear";

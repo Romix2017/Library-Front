@@ -6,10 +6,10 @@ export class BooksDTO extends AbstractDTO {
     super()
     super.className = "BooksDTO";
   }
-  Id: number;
-  Name: string;
-  Author: string;
-  PublishingDate: Date;
-  GenresId: number;
-  Notation: string;
+  id: number;
+  name: string;
+  author: string;
+  publishingDate: Date;
+  genresId: number;
+  notation: string;
 }

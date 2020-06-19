@@ -16,7 +16,11 @@ const Reducers = createReducer(
       ...state,
       BooksState: payload.books
     })),
-  on(BooksActions.BooksError, (state: BooksStore) => (
+  on(BooksActions.BookDeletedSuccessfully, (state: BooksStore, { payload }) => ({
+      ...state,
+      BooksState: state.BooksState.filter(val => val.id !== payload.bookId)
+  })),
+  on(BooksActions.BooksLoadError, (state: BooksStore) => (
     {
       ...state,
       BooksState: []

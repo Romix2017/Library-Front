@@ -4,12 +4,12 @@ import { StoreModule } from '@ngrx/store';
 import { BooksReducers } from './books.reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { BooksEffects } from './books.effects';
-import { ErrorHandlerEffect } from '../errorHandlers/errorHandlerEffect';
+import { BooksErrorEffect } from './booksErrorEffects';
 
 @NgModule({
   imports: [
     StoreModule.forFeature(BOOKS_STATE, BooksReducers),
-    EffectsModule.forFeature([BooksEffects, ErrorHandlerEffect])
+    EffectsModule.forFeature([BooksEffects, BooksErrorEffect])
   ]
 })
 export class BooksModule { }

@@ -8,26 +8,26 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap, delay } from 'rxjs/operators';
+import { DELETE } from '../../../shared/const/sharedConsts';
+import { MatTable } from '@angular/material/table';
+
 @Component({
   selector: 'app-books',
   templateUrl: './books.component.html',
   styleUrls: ['./books.component.scss']
 })
 export class BooksComponent implements OnInit, OnDestroy, AfterViewInit {
-  displayedColumns: string[] = ['id', 'name', 'author', 'publishingDate', 'genresId', 'notation'];
-  public exampleDatabase: Observable<BooksDTO[]>;
+  displayedColumns: string[] = ['id', 'name', 'author', 'publishingDate', 'genresId', 'notation', 'delete'];
   data: BooksDTO[] = [];
   private booksSubscription: Subscription;
-
+  deleteIcon: string;
   resultsLength = 0;
   isLoadingResults = false;
   isRateLimitReached = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   constructor(private booksService: BooksService) { }
-
   ngAfterViewInit() {
-    this.exampleDatabase = this.booksService.getAllBooks();
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
@@ -51,7 +51,11 @@ export class BooksComponent implements OnInit, OnDestroy, AfterViewInit {
       ).subscribe(data => this.data = data)
   }
   ngOnInit(): void {
+    this.deleteIcon = DELETE;
   }
   ngOnDestroy(): void {
+  }
+  deleteItem(id: number): void {
+    this.booksService.deleteBook(id);
   }
 }

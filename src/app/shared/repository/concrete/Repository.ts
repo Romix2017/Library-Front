@@ -28,8 +28,8 @@ export class Repository<T extends AbstractDTO> implements IRepository<T> {
         return myVar;
       }));
   }
-  Add(entity: T): void {
-
+  Add(entity: T): Observable<any> {
+    return this.http.post(this.currentRoute.CreateNewItem(), entity);
   }
   AddRange(entities: T[]) {
 

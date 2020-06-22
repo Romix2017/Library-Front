@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { BooksDTO } from '../repository/DTO/BooksDTO';
-import { getAllBooks, deleteBook } from '../store/books/books.actions';
+import { getAllBooks, deleteBook, addBook } from '../store/books/books.actions';
 import { selectBooks } from '../store/books/books.selectors';
 import { map } from 'rxjs/operators';
 
@@ -18,9 +18,10 @@ export class BooksService {
     return this.store.pipe(
       select(selectBooks));
   }
-  deleteBook(id: number): Observable<BooksDTO[]> {
+  deleteBook(id: number): void {
     this.store.dispatch(deleteBook({ bookId: id }));
-    return this.store.pipe(
-      select(selectBooks));
+  }
+  addBook(book: BooksDTO) {
+    this.store.dispatch(addBook({ book: book }));
   }
 }

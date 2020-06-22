@@ -51,5 +51,10 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
-  <mat-paginator [length]="resultsLength" [pageSize]="30"></mat-paginator>
+  <mat-toolbar>
+    <mat-toolbar-row>
+      <a mat-raised-button color="primary" (click)="addNewBook()">Add</a>
+      <mat-paginator [length]="resultsLength" [pageSize]="30"></mat-paginator>
+    </mat-toolbar-row>
+  </mat-toolbar>
 </div>

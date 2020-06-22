@@ -10,6 +10,8 @@ import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap, delay } from 'rxjs/operators';
 import { DELETE } from '../../../shared/const/sharedConsts';
 import { MatTable } from '@angular/material/table';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { AddDialogComponent } from '../dialogs/add-dialog/add-dialog.component';
 
 @Component({
   selector: 'app-books',
@@ -26,7 +28,7 @@ export class BooksComponent implements OnInit, OnDestroy, AfterViewInit {
   isRateLimitReached = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  constructor(private booksService: BooksService) { }
+  constructor(private booksService: BooksService, public dialog: MatDialog) { }
   ngAfterViewInit() {
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     merge(this.sort.sortChange, this.paginator.page)
@@ -57,5 +59,15 @@ export class BooksComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   deleteItem(id: number): void {
     this.booksService.deleteBook(id);
+  }
+  addNewBook(): void {
+    let newBook = new BooksDTO();
+    let dialogRef: MatDialogRef<AddDialogComponent, BooksDTO> = this.dialog.open(AddDialogComponent, {
+      width: '300px',
+      data: newBook
+    });
+    dialogRef.afterClosed().subscribe(book => {
+      this.booksService.addBook(book);
+    })
   }
 }

@@ -5,11 +5,11 @@ import { initialState, BooksStore } from './books.store';
 
 const Reducers = createReducer(
   initialState,
-  on(BooksActions.addBook, (state: BooksStore, { books }) => ({
+  on(BooksActions.BookCreatedSuccessfully, (state: BooksStore, { payload }) => ({
     ...state,
     BooksState: [
       ...state.BooksState,
-      books]
+      payload.book]
   })),
   on(BooksActions.AllBooksLoadedSuccessfully, (state: BooksStore, { payload }) => (
     {
@@ -17,8 +17,8 @@ const Reducers = createReducer(
       BooksState: payload.books
     })),
   on(BooksActions.BookDeletedSuccessfully, (state: BooksStore, { payload }) => ({
-      ...state,
-      BooksState: state.BooksState.filter(val => val.id !== payload.bookId)
+    ...state,
+    BooksState: state.BooksState.filter(val => val.id !== payload.bookId)
   })),
   on(BooksActions.BooksLoadError, (state: BooksStore) => (
     {

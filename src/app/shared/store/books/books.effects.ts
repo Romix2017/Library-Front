@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { UnitofworkService } from '../../services/unitofwork.service'
-import { getAllBooks, AllBooksLoadedSuccessfully, deleteBook, BookDeletedSuccessfully, BooksDeleteError, BooksLoadError } from './books.actions'
+import { getAllBooks, AllBooksLoadedSuccessfully, deleteBook, BookDeletedSuccessfully, BooksDeleteError, BooksLoadError, addBook, BooksCreateError, BookCreatedSuccessfully } from './books.actions'
 import { setSpinnerOn, setSpinnerOff } from '../interfaces/interface.actions'
 import { map, mergeMap, catchError, switchMap, concatMap } from 'rxjs/operators';
 import { BooksDTO } from '../../repository/DTO/BooksDTO'
@@ -30,6 +30,18 @@ export class BooksEffects {
           return of(BookDeletedSuccessfully({ payload: { bookId: action.bookId } }))
         }),
         catchError(() => { return of(BooksDeleteError()) })),
+      of(setSpinnerOff())
+    ))
+  ))
+  addBook$ = createEffect(() => this.actions$.pipe(
+    ofType(addBook),
+    concatMap((action) => concat(
+      of(setSpinnerOn()),
+      this.UnitOfWorkService.BooksRepo.Add(action.book).pipe(
+        switchMap(x => {
+          return of(BookCreatedSuccessfully({ payload: { book: x } }))
+        }),
+        catchError(() => { return of(BooksCreateError()) })),
       of(setSpinnerOff())
     ))
   ))

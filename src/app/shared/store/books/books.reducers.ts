@@ -20,6 +20,13 @@ const Reducers = createReducer(
     ...state,
     BooksState: state.BooksState.filter(val => val.id !== payload.bookId)
   })),
+  on(BooksActions.BookUpdatedSuccessfully, (state: BooksStore, { payload }) => ({
+    ...state,
+    BooksState: state.BooksState.map(x => {
+      if (x.id == payload.book.id) { x = payload.book }
+      return x;
+    })
+  })),
   on(BooksActions.BooksLoadError, (state: BooksStore) => (
     {
       ...state,

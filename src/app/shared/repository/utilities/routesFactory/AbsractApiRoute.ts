@@ -17,13 +17,13 @@ export abstract class AbstractApiRoute implements IApiRoute {
   GetById(elementId: number): string {
     return this.genericRoute(this.routeParams, "" + elementId);
   }
-  UpdateById(elementId: number): any {
-    return this.genericRoute(this.routeParams, "" + elementId);
-  }
-  CreateNewItem(): any {
+  Update(): string {
     return this.genericRoute(this.routeParams);
   }
-  DeleteById(elementId: number): any {
+  CreateNewItem(): string {
+    return this.genericRoute(this.routeParams);
+  }
+  DeleteById(elementId: number): string {
     return this.genericRoute(this.routeParams, "" + elementId);
   }
 }

@@ -12,6 +12,7 @@ import { DELETE } from '../../../shared/const/sharedConsts';
 import { MatTable } from '@angular/material/table';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddDialogComponent } from '../dialogs/add-dialog/add-dialog.component';
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-books',
@@ -28,6 +29,7 @@ export class BooksComponent implements OnInit, OnDestroy, AfterViewInit {
   isRateLimitReached = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  controls: FormArray;
   constructor(private booksService: BooksService, public dialog: MatDialog) { }
   ngAfterViewInit() {
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
@@ -50,7 +52,32 @@ export class BooksComponent implements OnInit, OnDestroy, AfterViewInit {
           this.isRateLimitReached = true;
           return observableOf([]);
         })
-      ).subscribe(data => this.data = data)
+      ).subscribe(data => {
+        this.data = data;
+        const toGroups = this.data.map(entity => {
+          return new FormGroup({
+            id: new FormControl(entity.id),
+            name: new FormControl(entity.name, Validators.required),
+            author: new FormControl(entity.author, Validators.required),
+            publishingDate: new FormControl(entity.publishingDate, Validators.required),
+            genresId: new FormControl(entity.genresId),
+            notation: new FormControl(entity.notation)
+          }, { updateOn: "blur" })
+        });
+        this.controls = new FormArray(toGroups);
+      })
+  }
+  updateField(index, field) {
+    const control = this.getControl(index, field);
+    if (control.valid) {
+      //this.core.update(index, field, control.value);
+      let myBook = this.controls.at(index).value as BooksDTO;
+      this.booksService.updateBook(myBook);
+    }
+  }
+  getControl(index, fieldName) {
+    const a = this.controls.at(index).get(fieldName) as FormControl;
+    return this.controls.at(index).get(fieldName) as FormControl;
   }
   ngOnInit(): void {
     this.deleteIcon = DELETE;

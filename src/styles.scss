@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
 body {
   font-family: sans-serif;
 }
@@ -14,7 +15,13 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
 .error-snackbar {
   background-color: darkred;
+  color: white;
+}
+
+.success-snackbar {
+  background-color: forestgreen;
   color: white;
 }

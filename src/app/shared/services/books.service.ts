@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { BooksDTO } from '../repository/DTO/BooksDTO';
-import { getAllBooks, deleteBook, addBook } from '../store/books/books.actions';
+import { getAllBooks, deleteBook, addBook, updateBook } from '../store/books/books.actions';
 import { selectBooks } from '../store/books/books.selectors';
 import { map } from 'rxjs/operators';
 
@@ -21,7 +21,10 @@ export class BooksService {
   deleteBook(id: number): void {
     this.store.dispatch(deleteBook({ bookId: id }));
   }
-  addBook(book: BooksDTO) {
+  addBook(book: BooksDTO): void {
     this.store.dispatch(addBook({ book: book }));
+  }
+  updateBook(book: BooksDTO): void {
+    this.store.dispatch(updateBook({ book: book }));
   }
 }

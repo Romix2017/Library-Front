@@ -7,4 +7,5 @@ export interface IRepository<T> {
   AddRange(entities: T[]);
   Remove(id: number): Observable<any>;
   RemoveRange(entities: T[]);
+  Update(entity: T): Observable<any>;
 }

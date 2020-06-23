@@ -5,6 +5,7 @@ import { BooksComponent } from './books/books.component';
 import { AngularModule } from '../../shared/modules/angular/angular.module';
 import { AddDialogComponent } from './dialogs/add-dialog/add-dialog.component';
 import { FormsModule } from '@angular/forms';
+import { SharedModule } from '../../shared/shared.module';
 
 
 @NgModule({
@@ -12,8 +13,7 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     BooksRoutingModule,
-    AngularModule,
-    FormsModule
+    SharedModule
   ]
 })
 export class BooksModule { }

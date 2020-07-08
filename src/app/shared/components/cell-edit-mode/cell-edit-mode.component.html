@@ -1,0 +1,6 @@
+<mat-form-field class="example-full-width">
+  <input matInput [formControl]="this.form">
+  <mat-error *ngIf="form.hasError('required')">
+    Field is <strong>required</strong>
+  </mat-error>
+</mat-form-field>

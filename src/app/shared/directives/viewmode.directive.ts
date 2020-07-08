@@ -1,10 +1,10 @@
 import { Directive, TemplateRef } from '@angular/core';
 
 @Directive({
-  selector: '[viewMode]'
+  selector: '[viewMode]',
+  exportAs: 'viewModeDirective'
 })
 export class ViewModeDirective {
   constructor(public tpl: TemplateRef<any>) {
-    console.log('view mode works');
   }
 }

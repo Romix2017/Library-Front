@@ -5,3 +5,5 @@ export const SERVER_PATH = HOST_API + API_LINK;
 export const DELIMITER = "/";
 
 export const BOOKS_LINK = "books";
+export const ROLES_LINK = "roles";
+export const GENRES_LINK = "genres";

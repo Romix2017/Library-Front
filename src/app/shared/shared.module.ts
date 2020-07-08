@@ -8,14 +8,27 @@ import { EditableComponent } from './components/editable/editable.component';
 import { ViewModeDirective } from './directives/viewmode.directive';
 import { EditModeDirective } from './directives/editmode.directive';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CellViewModeComponent } from './components/cell-view-mode/cell-view-mode.component';
+import { CellEditModeComponent } from './components/cell-edit-mode/cell-edit-mode.component';
+import { DateCellEditModeComponent } from './components/date-cell-edit-mode/date-cell-edit-mode.component';
+import { DataCellViewModeComponent } from './components/data-cell-view-mode/data-cell-view-mode.component';
 
 
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent,
-    EditableComponent, ViewModeDirective, EditModeDirective],
+  declarations: [HeaderComponent,
+    FooterComponent,
+    EditableComponent,
+    ViewModeDirective,
+    EditModeDirective,
+    CellViewModeComponent,
+    CellEditModeComponent,
+    DateCellEditModeComponent,
+    DataCellViewModeComponent],
   imports: [
     CommonModule,
-    AngularModule
+    AngularModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     AngularModule,
@@ -26,7 +39,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     FormsModule,
     ViewModeDirective,
-    EditModeDirective
+    EditModeDirective,
+    CellViewModeComponent
   ]
 })
 export class SharedModule { }

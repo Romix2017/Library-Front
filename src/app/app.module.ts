@@ -13,6 +13,9 @@ import { environment } from '../environments/environment';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { HttpClientModule } from '@angular/common/http';
+import { RolesModule } from './shared/store/roles/roles.module';
+import { GenresModule } from './shared/store/genres/genres.module';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -24,12 +27,14 @@ import { HttpClientModule } from '@angular/common/http';
     SharedModule,
     BrowserAnimationsModule,
     BooksModule,
+    RolesModule,
     InterfaceModule,
     StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([]),
     StoreRouterConnectingModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    GenresModule
   ],
   providers: [],
   bootstrap: [AppComponent]

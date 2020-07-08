@@ -70,13 +70,11 @@ export class BooksComponent implements OnInit, OnDestroy, AfterViewInit {
   updateField(index, field) {
     const control = this.getControl(index, field);
     if (control.valid) {
-      //this.core.update(index, field, control.value);
       let myBook = this.controls.at(index).value as BooksDTO;
       this.booksService.updateBook(myBook);
     }
   }
   getControl(index, fieldName) {
-    const a = this.controls.at(index).get(fieldName) as FormControl;
     return this.controls.at(index).get(fieldName) as FormControl;
   }
   ngOnInit(): void {

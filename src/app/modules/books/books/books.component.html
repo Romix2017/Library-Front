@@ -44,14 +44,18 @@
                     [form]="getControl(index, 'publishingDate')"></editable>
         </td>
       </ng-container>
-      <ng-container matColumnDef="genresId">
+      <ng-container matColumnDef="genresName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
           Genre
         </th>
         <td mat-cell *matCellDef="let row; let index = index">
           <editable (update)="updateField(index, 'genresId')"
-                    textForm="true"
-                    cellName="{{row.genresId}}"
+                    selectForm="true"
+                    keyForItem="id"
+                    valueForItem="name"
+                    title="Genre"
+                    [items]="genresItems"
+                    cellName="{{row.genresName}}"
                     [form]="getControl(index, 'genresId')">
           </editable>
         </td>

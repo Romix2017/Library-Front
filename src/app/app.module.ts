@@ -15,7 +15,8 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { HttpClientModule } from '@angular/common/http';
 import { RolesModule } from './shared/store/roles/roles.module';
 import { GenresModule } from './shared/store/genres/genres.module';
-
+import { UsersModule } from './shared/store/users/users.module';
+import { BooksHistoryModule } from './shared/store/books-history/books-history.module';
 @NgModule({
   declarations: [
     AppComponent
@@ -28,6 +29,8 @@ import { GenresModule } from './shared/store/genres/genres.module';
     BrowserAnimationsModule,
     BooksModule,
     RolesModule,
+    UsersModule,
+    BooksHistoryModule,
     InterfaceModule,
     StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),

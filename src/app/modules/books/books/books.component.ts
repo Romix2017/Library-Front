@@ -13,6 +13,8 @@ import { MatTable } from '@angular/material/table';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddDialogComponent } from '../dialogs/add-dialog/add-dialog.component';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { GenresService } from '../../../shared/services/genres.service';
+import { GenresDTO } from '../../../shared/repository/DTO/GenresDTO';
 
 @Component({
   selector: 'app-books',
@@ -20,7 +22,7 @@ import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
   styleUrls: ['./books.component.scss']
 })
 export class BooksComponent implements OnInit, OnDestroy, AfterViewInit {
-  displayedColumns: string[] = ['id', 'name', 'author', 'publishingDate', 'genresId', 'notation', 'delete'];
+  displayedColumns: string[] = ['id', 'name', 'author', 'publishingDate', 'genresName', 'notation', 'delete'];
   data: BooksDTO[] = [];
   private booksSubscription: Subscription;
   deleteIcon: string;
@@ -30,8 +32,14 @@ export class BooksComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   controls: FormArray;
-  constructor(private booksService: BooksService, public dialog: MatDialog) { }
+  genresItems: Observable<GenresDTO[]>;
+
+  constructor(private booksService: BooksService,
+    private genresService: GenresService,
+    public dialog: MatDialog) { }
   ngAfterViewInit() {
+    console.log("after view init books");
+    this.genresItems = this.genresService.getAllGenres();
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
@@ -61,6 +69,7 @@ export class BooksComponent implements OnInit, OnDestroy, AfterViewInit {
             author: new FormControl(entity.author, Validators.required),
             publishingDate: new FormControl(entity.publishingDate, Validators.required),
             genresId: new FormControl(entity.genresId),
+            genresName: new FormControl(entity.genresName),
             notation: new FormControl(entity.notation)
           }, { updateOn: "blur" })
         });

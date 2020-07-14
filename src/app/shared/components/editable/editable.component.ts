@@ -20,6 +20,11 @@ export class EditableComponent implements OnInit {
   editMode: boolean = false;
   @Input() dateForm: boolean = false;
   @Input() textForm: boolean = false;
+  @Input() selectForm: boolean = false;
+  @Input() keyForItem: string;
+  @Input() valueForItem: string;
+  @Input() title: string;
+  @Input() items: string;
   constructor(private host: ElementRef) {
   }
 

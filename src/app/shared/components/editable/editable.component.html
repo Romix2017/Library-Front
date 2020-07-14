@@ -1,4 +1,10 @@
-<app-cell-view-mode [form]="this.form" cellName="{{cellName}}" *ngIf="!editMode && this.textForm"></app-cell-view-mode>
+<app-cell-view-mode [form]="this.form" cellName="{{cellName}}" *ngIf="!editMode && (this.textForm || this.selectForm)"></app-cell-view-mode>
 <app-data-cell-view-mode [form]="this.form" cellName="{{cellName}}" *ngIf="!editMode && this.dateForm"></app-data-cell-view-mode>
 <app-cell-edit-mode [form]="this.form" *ngIf="editMode && this.textForm"></app-cell-edit-mode>
 <app-date-cell-edit-mode [form]="this.form" *ngIf="editMode && this.dateForm"></app-date-cell-edit-mode>
+<app-select-cell-edit-mode [form]="this.form"
+                           [keyForItem]="this.keyForItem"
+                           [valueForItem]="this.valueForItem"
+                           [title]="this.title"
+                           [items]="this.items"
+                           *ngIf="editMode && this.selectForm"></app-select-cell-edit-mode>

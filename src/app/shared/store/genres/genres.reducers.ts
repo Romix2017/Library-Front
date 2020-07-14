@@ -13,7 +13,7 @@ const Reducers = createReducer(
   on(GenresActions.AllGenresLoadedSuccessfully, (state: GenresStore, { payload }) => (
     {
       ...state,
-      BooksState: payload.genres
+      GenresState: payload.genres
     })),
   on(GenresActions.GenreDeletedSuccessfully, (state: GenresStore, { payload }) => ({
     ...state,

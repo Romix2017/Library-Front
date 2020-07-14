@@ -1,0 +1,8 @@
+<mat-form-field appearance="fill">
+  <mat-label>{{title}}</mat-label>
+  <mat-select [formControl]="this.form">
+    <mat-option *ngFor="let item of items | async" [value]="item[keyForItem]">
+      {{item[valueForItem]}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

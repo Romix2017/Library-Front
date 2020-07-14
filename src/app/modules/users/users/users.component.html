@@ -1,1 +1,88 @@
-<p>users works!</p>
+<div class="example-container mat-elevation-z8">
+  <div class="example-loading-shade"
+       *ngIf="isLoadingResults || isRateLimitReached">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+      GitHub's API rate limit has been reached. It will be reset in one minute.
+    </div>
+  </div>
+  <div class="example-table-container">
+    <table mat-table [dataSource]="data" class="example-table"
+           matSort matSortActive="id" matSortDisableClear matSortDirection="desc">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>#</th>
+        <td mat-cell *matCellDef="let row">{{row.id}}</td>
+      </ng-container>
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+          firstName
+        </th>
+        <td mat-cell *matCellDef="let row; let index = index">
+          <editable (update)="updateField(index, 'firstName')"
+                    textForm="true"
+                    cellName="{{row.firstName}}"
+                    [form]="getControl(index, 'firstName')"></editable>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+          Last Name
+        </th>
+        <td mat-cell *matCellDef="let row; let index = index">
+          <editable (update)="updateField(index, 'lastName')"
+                    textForm="true"
+                    cellName="{{row.lastName}}"
+                    [form]="getControl(index, 'lastName')">
+          </editable>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="userName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+          User Name
+        </th>
+        <td mat-cell *matCellDef="let row; let index = index">
+          <editable (update)="updateField(index, 'userName')"
+                    textForm="true"
+                    cellName="{{row.userName}}"
+                    [form]="getControl(index, 'userName')">
+          </editable>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="dob">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>DOB</th>
+        <td mat-cell *matCellDef="let row; let index = index">
+          <editable (update)="updateField(index, 'dob')"
+                    dateForm="true"
+                    cellName="{{row.dob}}"
+                    [form]="getControl(index, 'dob')"></editable>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="rolesId">
+        <th mat-header-cell *matHeaderCellDef>rolesId</th>
+        <td mat-cell *matCellDef="let row; let index = index">
+          <editable (update)="updateField(index, 'rolesId')"
+                    textForm="true"
+                    cellName="{{row.rolesId}}"
+                    [form]="getControl(index, 'rolesId')">
+          </editable>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef>
+          Delete
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-button color="primary" (click)="deleteItem(row.id)"><mat-icon>{{deleteIcon}}</mat-icon></button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  <mat-toolbar>
+    <mat-toolbar-row>
+      <a mat-raised-button color="primary" (click)="addNewBook()">Add</a>
+      <mat-paginator [length]="resultsLength" [pageSize]="30"></mat-paginator>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</div>

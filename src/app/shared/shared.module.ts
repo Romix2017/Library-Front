@@ -12,6 +12,7 @@ import { CellViewModeComponent } from './components/cell-view-mode/cell-view-mod
 import { CellEditModeComponent } from './components/cell-edit-mode/cell-edit-mode.component';
 import { DateCellEditModeComponent } from './components/date-cell-edit-mode/date-cell-edit-mode.component';
 import { DataCellViewModeComponent } from './components/data-cell-view-mode/data-cell-view-mode.component';
+import { SelectCellEditModeComponent } from './components/select-cell-edit-mode/select-cell-edit-mode.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { DataCellViewModeComponent } from './components/data-cell-view-mode/data
     CellViewModeComponent,
     CellEditModeComponent,
     DateCellEditModeComponent,
-    DataCellViewModeComponent],
+    DataCellViewModeComponent,
+    SelectCellEditModeComponent],
   imports: [
     CommonModule,
     AngularModule,

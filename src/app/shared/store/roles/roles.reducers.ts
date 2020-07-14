@@ -22,7 +22,7 @@ const Reducers = createReducer(
   })),
   on(RolesActions.RoleUpdatedSuccessfully, (state: RolesStore, { payload }) => ({
     ...state,
-    BooksState: state.RolesState.map(x => {
+    RolesState: state.RolesState.map(x => {
       if (x.id == payload.role.id) { x = payload.role }
       return x;
     })

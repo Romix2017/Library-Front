@@ -1,0 +1,31 @@
+<h1 mat-dialog-title>Add new book history</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Books ID</mat-label>
+    <input matInput [(ngModel)]="data.booksId" type="number">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Users ID</mat-label>
+    <input matInput [(ngModel)]="data.usersId" type="number">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Choose a given date</mat-label>
+    <input matInput [matDatepicker]="picker_given" [(ngModel)]="data.dateGiven">
+    <mat-datepicker-toggle matSuffix [for]="picker_given"></mat-datepicker-toggle>
+    <mat-datepicker #picker_given></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Choose a returned date</mat-label>
+    <input matInput [matDatepicker]="picker_returned" [(ngModel)]="data.dateReturned">
+    <mat-datepicker-toggle matSuffix [for]="picker_returned"></mat-datepicker-toggle>
+    <mat-datepicker #picker_returned></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Notes</mat-label>
+    <input matInput [(ngModel)]="data.notes">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Close</button>
+  <button mat-button (click)="onAddClick()">Add</button>
+</div>

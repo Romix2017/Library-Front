@@ -7,3 +7,5 @@ export const DELIMITER = "/";
 export const BOOKS_LINK = "books";
 export const ROLES_LINK = "roles";
 export const GENRES_LINK = "genres";
+export const USERS_LINK = "users";
+export const BOOKS_HISTORY_LINK = "bookshistory";

@@ -12,4 +12,5 @@ export class BooksDTO extends AbstractDTO {
   publishingDate: Date;
   genresId: number;
   notation: string;
+  genresName: string;
 }

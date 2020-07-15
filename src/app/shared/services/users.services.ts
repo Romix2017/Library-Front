@@ -3,7 +3,7 @@ import { Store, select } from '@ngrx/store';
 import { UsersDTO } from '../repository/DTO/UsersDTO';
 import { Observable } from 'rxjs';
 import { getAllUsers, deleteUser, addUser, updateUser } from '../store/users/users.actions';
-import { selectUsers } from '../store/users/users.selectors';
+import { selectUsers, selectUsersJointRoles } from '../store/users/users.selectors';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class UsersService {
   getAllUsers(): Observable<UsersDTO[]> {
     this.store.dispatch(getAllUsers());
     return this.store.pipe(
-      select(selectUsers));
+      select(selectUsersJointRoles));
   }
   deleteUser(id: number): void {
     this.store.dispatch(deleteUser({ userId: id }));

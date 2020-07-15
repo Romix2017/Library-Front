@@ -12,4 +12,5 @@ export class UsersDTO extends AbstractDTO {
   firstName: string;
   lastName: string;
   userName: string;
+  rolesName: string;
 }

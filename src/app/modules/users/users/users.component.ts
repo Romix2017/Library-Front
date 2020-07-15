@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UsersDTO } from '../../../shared/repository/DTO/UsersDTO';
-import { Subscription, merge, of as observableOf } from 'rxjs';
+import { Subscription, merge, of as observableOf, Observable } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
@@ -9,6 +9,8 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { startWith, delay, switchMap, map, catchError } from 'rxjs/operators';
 import { DELETE } from '../../../shared/const/sharedConsts';
 import { AddDialogComponent } from '../dialogs/add-dialog/add-dialog.component';
+import { RolesDTO } from '../../../shared/repository/DTO/RolesDTO';
+import { RolesService } from '../../../shared/services/roles.service';
 
 @Component({
   selector: 'app-users',
@@ -27,8 +29,12 @@ export class UsersComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   controls: FormArray;
-  constructor(private usersService: UsersService, public dialog: MatDialog) { }
+  rolesItems: Observable<RolesDTO[]>;
+  constructor(private usersService: UsersService,
+    private rolesService: RolesService,
+    public dialog: MatDialog) { }
   ngAfterViewInit() {
+    this.rolesItems = this.rolesService.getAllRoles();
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
@@ -58,7 +64,8 @@ export class UsersComponent implements OnInit {
             firstName: new FormControl(entity.firstName, Validators.required),
             lastName: new FormControl(entity.lastName, Validators.required),
             userName: new FormControl(entity.userName, Validators.required),
-            rolesId: new FormControl(entity.rolesId)
+            rolesId: new FormControl(entity.rolesId),
+            rolesName: new FormControl(entity.rolesName)
           }, { updateOn: "blur" })
         });
         this.controls = new FormArray(toGroups);

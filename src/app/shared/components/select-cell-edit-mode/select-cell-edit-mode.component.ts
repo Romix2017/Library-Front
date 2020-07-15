@@ -24,6 +24,5 @@ export class SelectCellEditModeComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-   // this.genres = this.genresService.getAllGenres();
   }
 }

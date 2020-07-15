@@ -58,11 +58,15 @@
         </td>
       </ng-container>
       <ng-container matColumnDef="rolesId">
-        <th mat-header-cell *matHeaderCellDef>rolesId</th>
+        <th mat-header-cell *matHeaderCellDef>Role</th>
         <td mat-cell *matCellDef="let row; let index = index">
           <editable (update)="updateField(index, 'rolesId')"
-                    textForm="true"
-                    cellName="{{row.rolesId}}"
+                    selectForm="true"
+                    keyForItem="id"
+                    valueForItem="name"
+                    title="Roles"
+                    [items]="rolesItems"
+                    cellName="{{row.rolesName}}"
                     [form]="getControl(index, 'rolesId')">
           </editable>
         </td>

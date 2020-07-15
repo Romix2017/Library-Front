@@ -8,7 +8,9 @@ export class BooksHistoryDTO extends AbstractDTO {
   }
   id: number
   booksId: number
+  booksName: string;
   usersId: number
+  usersName: string;
   dateGiven: Date
   dateReturned: Date
   notes: string

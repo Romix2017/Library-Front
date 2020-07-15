@@ -18,6 +18,10 @@ export class BooksService {
     return this.store.pipe(
       select(selectBooksJointGenres));
   }
+  getAllBooksStripped(): Observable<BooksDTO[]> {
+    this.store.dispatch(getAllBooks());
+    return this.store.pipe(select(selectBooks))
+  }
   deleteBook(id: number): void {
     this.store.dispatch(deleteBook({ bookId: id }));
   }

@@ -15,6 +15,10 @@ export class UsersService {
     return this.store.pipe(
       select(selectUsersJointRoles));
   }
+  getAllUsersStripped(): Observable<UsersDTO[]> {
+    this.store.dispatch(getAllUsers());
+    return this.store.pipe(select(selectUsers));
+  }
   deleteUser(id: number): void {
     this.store.dispatch(deleteUser({ userId: id }));
   }

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BooksHistoryDTO } from '../../../shared/repository/DTO/BooksHistoryDTO';
-import { Subscription, merge, of as observableOf } from 'rxjs';
+import { Subscription, merge, of as observableOf, Observable } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
@@ -9,6 +9,10 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { startWith, delay, switchMap, map, catchError } from 'rxjs/operators';
 import { DELETE } from '../../../shared/const/sharedConsts';
 import { AddDialogComponent } from '../../books-history/dialogs/add-dialog/add-dialog.component';
+import { BooksDTO } from '../../../shared/repository/DTO/BooksDTO';
+import { BooksService } from '../../../shared/services/books.service';
+import { UsersDTO } from '../../../shared/repository/DTO/UsersDTO';
+import { UsersService } from '../../../shared/services/users.services';
 
 @Component({
   selector: 'app-books-history',
@@ -26,8 +30,15 @@ export class BooksHistoryComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   controls: FormArray;
-  constructor(private booksHistoryService: BooksHistoryService, public dialog: MatDialog) { }
+  booksItems: Observable<BooksDTO[]>;
+  usersItems: Observable<UsersDTO[]>;
+  constructor(private booksHistoryService: BooksHistoryService,
+    private usersService: UsersService,
+    private booksService: BooksService,
+    public dialog: MatDialog) { }
   ngAfterViewInit() {
+    this.booksItems = this.booksService.getAllBooksStripped();
+    this.usersItems = this.usersService.getAllUsersStripped();
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
@@ -57,7 +68,9 @@ export class BooksHistoryComponent implements OnInit {
             usersId: new FormControl(entity.usersId, Validators.required),
             dateGiven: new FormControl(entity.dateGiven, Validators.required),
             dateReturned: new FormControl(entity.dateReturned),
-            notes: new FormControl(entity.notes)
+            notes: new FormControl(entity.notes),
+            booksName: new FormControl(entity.booksName),
+            usersName: new FormControl(entity.usersName)
           }, { updateOn: "blur" })
         });
         this.controls = new FormArray(toGroups);

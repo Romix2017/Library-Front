@@ -3,7 +3,7 @@ import { Store, select } from '@ngrx/store';
 import { BooksHistoryDTO } from '../repository/DTO/BooksHistoryDTO';
 import { Observable } from 'rxjs';
 import { getAllBooksHistory, deleteBookHistory, addBookHistory, updateBookHistory } from '../store/books-history/books-history.actions';
-import { selectBooksHistory } from '../store/books-history/books-history.selectors';
+import { selectBooksHistory, selectBooksHistoryJointBooksAndUsers } from '../store/books-history/books-history.selectors';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class BooksHistoryService {
   getAllBooksHistory(): Observable<BooksHistoryDTO[]> {
     this.store.dispatch(getAllBooksHistory());
     return this.store.pipe(
-      select(selectBooksHistory));
+      select(selectBooksHistoryJointBooksAndUsers));
   }
   deleteBookHistory(id: number): void {
     this.store.dispatch(deleteBookHistory({ book_historyId: id }));

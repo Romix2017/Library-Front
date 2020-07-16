@@ -89,7 +89,7 @@ export class UsersComponent implements OnInit {
   deleteItem(id: number): void {
     this.usersService.deleteUser(id);
   }
-  addNewBook(): void {
+  addNewUser(): void {
     let newUser = new UsersDTO();
     let dialogRef: MatDialogRef<AddDialogComponent, UsersDTO> = this.dialog.open(AddDialogComponent, {
       width: '300px',

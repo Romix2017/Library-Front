@@ -1,16 +1,33 @@
 <h1 mat-dialog-title>Add new book history</h1>
 <div mat-dialog-content>
-  <mat-form-field>
-    <mat-label>Books ID</mat-label>
-    <input matInput [(ngModel)]="data.booksId" type="number">
+  <mat-form-field appearance="fill">
+    <mat-label>Book</mat-label>
+    <mat-select [(ngModel)]="data.booksId" [formControl]="getControl('booksId')" required>
+      <mat-option *ngFor="let item of booksItems | async" [value]="item.id">
+        {{item.name}}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="getControl('booksId').hasError('required')">
+      Field is <strong>required</strong>
+    </mat-error>
   </mat-form-field>
-  <mat-form-field>
-    <mat-label>Users ID</mat-label>
-    <input matInput [(ngModel)]="data.usersId" type="number">
+  <mat-form-field appearance="fill">
+    <mat-label>User</mat-label>
+    <mat-select [(ngModel)]="data.usersId" [formControl]="getControl('usersId')" required>
+      <mat-option *ngFor="let item of usersItems | async" [value]="item.id">
+        {{item.userName}}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="getControl('booksId').hasError('required')">
+      Field is <strong>required</strong>
+    </mat-error>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Choose a given date</mat-label>
-    <input matInput [matDatepicker]="picker_given" [(ngModel)]="data.dateGiven">
+    <input matInput [matDatepicker]="picker_given" [(ngModel)]="data.dateGiven" [formControl]="getControl('dateGiven')" required>
+    <mat-error *ngIf="getControl('dateGiven').hasError('required')">
+      Field is <strong>required</strong>
+    </mat-error>
     <mat-datepicker-toggle matSuffix [for]="picker_given"></mat-datepicker-toggle>
     <mat-datepicker #picker_given></mat-datepicker>
   </mat-form-field>

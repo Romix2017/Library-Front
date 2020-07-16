@@ -12,6 +12,7 @@ export class DateCellEditModeComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log("date cell edit mode");
   }
 
 }

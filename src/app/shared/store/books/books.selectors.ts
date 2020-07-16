@@ -19,7 +19,7 @@ function JoinBookAndGenre(booksArray: BooksDTO[], genresStore: GenresStore) {
     newBook.genresId = x.genresId;
     newBook.id = x.id;
     newBook.name = x.name;
-    newBook.notation = x.name;
+    newBook.notation = x.notation;
     newBook.publishingDate = x.publishingDate;
     return newBook;
   });

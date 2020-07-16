@@ -59,7 +59,7 @@
         <td mat-cell *matCellDef="let row; let index = index">
           <editable (update)="updateField(index, 'dateReturned')"
                     dateForm="true"
-                    cellName="{{row.dateReturned}}"
+                    cellName="{{row.dateReturned == null ? 'none' : row.dateReturned}}"
                     [form]="getControl(index, 'dateReturned')"></editable>
         </td>
       </ng-container>

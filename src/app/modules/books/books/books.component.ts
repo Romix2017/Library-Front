@@ -38,7 +38,6 @@ export class BooksComponent implements OnInit, OnDestroy, AfterViewInit {
     private genresService: GenresService,
     public dialog: MatDialog) { }
   ngAfterViewInit() {
-    console.log("after view init books");
     this.genresItems = this.genresService.getAllGenres();
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     merge(this.sort.sortChange, this.paginator.page)

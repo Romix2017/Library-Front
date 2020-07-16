@@ -26,7 +26,7 @@ export class RolesEffects {
     ofType(deleteRole),
     concatMap((action) => concat(
       of(setSpinnerOn()),
-      this.UnitOfWorkService.BooksRepo.Remove(action.roleId).pipe(
+      this.UnitOfWorkService.RolesRepo.Remove(action.roleId).pipe(
         switchMap(x => {
           return of(RoleDeletedSuccessfully({ payload: { roleId: action.roleId } }))
         }),

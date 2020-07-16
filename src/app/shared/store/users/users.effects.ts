@@ -26,7 +26,7 @@ export class UsersEffects {
     ofType(deleteUser),
     concatMap((action) => concat(
       of(setSpinnerOn()),
-      this.UnitOfWorkService.BooksRepo.Remove(action.userId).pipe(
+      this.UnitOfWorkService.UsersRepo.Remove(action.userId).pipe(
         switchMap(x => {
           return of(UserDeletedSuccessfully({ payload: { userId: action.userId } }))
         }),

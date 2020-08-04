@@ -1,0 +1,34 @@
+<div class="header center">Register</div>
+<form [formGroup]="registerFormGroup" (ngSubmit)="register()">
+  <mat-form-field>
+    <mat-label>First name</mat-label>
+    <input matInput [formControl]="getControl('firstName')" required>
+    <mat-error *ngIf="getControl('firstName').hasError('required')">
+      Field is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Last name</mat-label>
+    <input matInput [formControl]="getControl('lastName')" required>
+    <mat-error *ngIf="getControl('lastName').hasError('required')">
+      Field is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+    <input matInput [formControl]="getControl('password')" required>
+    <mat-error *ngIf="getControl('password').hasError('required')">
+      Field is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Login</mat-label>
+    <input matInput [formControl]="getControl('userName')" required>
+    <mat-error *ngIf="getControl('userName').hasError('required')">
+      Field is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <div class="actions">
+    <button mat-raised-button color="primary" type="submit" [disabled]="!registerFormGroup.valid">Register</button>
+  </div>
+</form>

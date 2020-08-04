@@ -17,6 +17,7 @@ import { RolesModule } from './shared/store/roles/roles.module';
 import { GenresModule } from './shared/store/genres/genres.module';
 import { UsersModule } from './shared/store/users/users.module';
 import { BooksHistoryModule } from './shared/store/books-history/books-history.module';
+import { LoginModule } from './modules/login/login.module';
 @NgModule({
   declarations: [
     AppComponent
@@ -37,7 +38,8 @@ import { BooksHistoryModule } from './shared/store/books-history/books-history.m
     EffectsModule.forRoot([]),
     StoreRouterConnectingModule.forRoot(),
     HttpClientModule,
-    GenresModule
+    GenresModule,
+    LoginModule
   ],
   providers: [],
   bootstrap: [AppComponent]

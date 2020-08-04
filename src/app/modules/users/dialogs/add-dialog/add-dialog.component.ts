@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RolesDTO } from '../../../../shared/repository/DTO/RolesDTO';
 import { Observable } from 'rxjs';
 import { RolesService } from '../../../../shared/services/roles.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-dialog',
@@ -12,6 +13,7 @@ import { RolesService } from '../../../../shared/services/roles.service';
 })
 export class AddDialogComponent implements OnInit {
   rolesItems: Observable<RolesDTO[]>;
+  private formGroup: FormGroup;
   constructor(
     public dialogRef: MatDialogRef<AddDialogComponent, UsersDTO>,
     private rolesService: RolesService,
@@ -21,9 +23,23 @@ export class AddDialogComponent implements OnInit {
     this.dialogRef.close();
   }
   onAddClick(): void {
-    this.dialogRef.close(this.data);
+    this.formGroup.markAllAsTouched();
+    if (this.formGroup.valid) {
+      this.dialogRef.close(this.data);
+    }
   }
   ngOnInit() {
     this.rolesItems = this.rolesService.getAllRoles();
+    this.formGroup = new FormGroup({
+      id: new FormControl(this.data.id),
+      dob: new FormControl(this.data.dob, Validators.required),
+      firstName: new FormControl(this.data.firstName, Validators.required),
+      lastName: new FormControl(this.data.lastName, Validators.required),
+      userName: new FormControl(this.data.userName, Validators.required),
+      rolesId: new FormControl(this.data.rolesId, Validators.required)
+    }, { updateOn: "blur" })
+  }
+  getControl(fieldName) {
+    return this.formGroup.get(fieldName) as FormControl;
   }
 }

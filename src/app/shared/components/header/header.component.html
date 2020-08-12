@@ -1,1 +1,8 @@
-<mat-toolbar color="primary">Library application</mat-toolbar>
+<mat-toolbar color="primary">
+  Library application
+  <span class="empty-spacer"></span>
+  {{userName}}
+  <button mat-icon-button (click)="logout()">
+    <mat-icon>exit_to_app</mat-icon>
+  </button>
+</mat-toolbar>

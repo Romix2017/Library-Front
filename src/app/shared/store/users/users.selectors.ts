@@ -20,6 +20,7 @@ function JoinUserAndRoleArray(userArray: UsersDTO[], rolesStore: RolesStore) {
     newUser.id = x.id;
     newUser.lastName = x.lastName;
     newUser.userName = x.userName;
+    newUser.rolesId = x.rolesId;
     return newUser;
   });
   return newArray;

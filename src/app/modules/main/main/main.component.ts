@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../login/services/auth.service';
 
 @Component({
   selector: 'app-main',
@@ -8,10 +9,15 @@ import { Router } from '@angular/router';
 })
 export class MainComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  isAdmin: boolean;
+  isUser: boolean;
+  isSuperuser: boolean;
+  constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
-    //this.router.navigateByUrl('/');
+    this.isAdmin = this.authService.isAdmin();
+    this.isUser = this.authService.isUser();
+    this.isSuperuser = this.authService.isSuperuser();
   }
 
 }

@@ -36,7 +36,8 @@ export class AddDialogComponent implements OnInit {
       firstName: new FormControl(this.data.firstName, Validators.required),
       lastName: new FormControl(this.data.lastName, Validators.required),
       userName: new FormControl(this.data.userName, Validators.required),
-      rolesId: new FormControl(this.data.rolesId, Validators.required)
+      rolesId: new FormControl(this.data.rolesId, Validators.required),
+      password: new FormControl(this.data.password, Validators.required)
     }, { updateOn: "blur" })
   }
   getControl(fieldName) {

@@ -1,11 +1,17 @@
 <mat-drawer-container>
   <mat-drawer mode="side" opened>
-    <div class="mat-but">
+    <div class="mat-but" *ngIf="isAdmin">
       <a mat-raised-button routerLink="/books" routerLinkActive="mat-primary">Books</a>
       <a mat-raised-button routerLink="/books-history" routerLinkActive="mat-primary">Books history</a>
-      <a mat-raised-button routerLink="/roles" routerLinkActive="mat-primary">Roles</a>
       <a mat-raised-button routerLink="/users" routerLinkActive="mat-primary">Users</a>
       <a mat-raised-button routerLink="/genres" routerLinkActive="mat-primary">Genres</a>
+    </div>
+    <div class="mat-but" *ngIf="isUser">
+      <a mat-raised-button routerLink="/books" routerLinkActive="mat-primary">Books</a>
+    </div>
+    <div class="mat-but" *ngIf="isSuperuser">
+      <a mat-raised-button routerLink="/roles" routerLinkActive="mat-primary">Roles</a>
+      <a mat-raised-button routerLink="/users" routerLinkActive="mat-primary">Users</a>
     </div>
   </mat-drawer>
   <mat-drawer-content><router-outlet></router-outlet></mat-drawer-content>

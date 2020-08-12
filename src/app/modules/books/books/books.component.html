@@ -72,7 +72,7 @@
           </editable>
         </td>
       </ng-container>
-      <ng-container matColumnDef="delete">
+      <ng-container matColumnDef="delete" *ngIf="isDeleteVisible">
         <th mat-header-cell *matHeaderCellDef>
           Delete
         </th>
@@ -86,7 +86,7 @@
   </div>
   <mat-toolbar>
     <mat-toolbar-row>
-      <a mat-raised-button color="primary" (click)="addNewBook()">Add</a>
+      <a mat-raised-button color="primary" (click)="addNewBook()" *ngIf="isAddVisible">Add</a>
       <mat-paginator [length]="resultsLength" [pageSize]="30"></mat-paginator>
     </mat-toolbar-row>
   </mat-toolbar>

@@ -5,7 +5,10 @@ import { Tokens } from '../models/tokens';
 import { localizedString } from '@angular/compiler/src/output/output_ast';
 import { Injectable } from '@angular/core';
 import { RegisterDTO } from '../../../shared/repository/DTO/RegisterDTO';
-
+import { LoginDTO } from '../../../shared/repository/DTO/LoginDTO';
+import * as jwt_decode from "jwt-decode";
+import { Role } from '../../../shared/enums/role';
+import { TokenModel } from '../../../shared/repository/models/tokenModel';
 @Injectable({
   providedIn: 'root'
 })
@@ -37,22 +40,54 @@ export class AuthService {
           return of(false);
         }))
   }
-  logout() {
-    return this.http.post<any>(`http:\\localhost:5001\login`, {
-      'refreshToken': this.getRefreshToken()
-    }).pipe(
+  logout(): Observable<boolean> {
+    let loginModel = new LoginDTO();
+    loginModel.tokenString = this.getJwtToken();
+    return this.http.post<any>("http:\\\\localhost:5000\\api\\login\\revoke", loginModel).pipe(
       tap(() => this.doLogoutUser()),
       mapTo(true),
       catchError(error => {
-        alert(error.error);
         return of(false);
       }));
+  }
+  getDecodedAccessToken(token: string): any {
+    try {
+      return jwt_decode(token);
+    }
+    catch (Error) {
+      return null;
+    }
+  }
+  getCurrentUserName(): string {
+    let res: string = "";
+    let token: TokenModel = this.getDecodedAccessToken(this.getJwtToken());
+    if (token) {
+      res = token.userName;
+    }
+    return res;
+  }
+  getCurrentUserRole(): string {
+    let res: string = "";
+    let token: TokenModel = this.getDecodedAccessToken(this.getJwtToken());
+    if (token) {
+      res = token.role;
+    }
+    return res;
+  }
+  isAdmin() {
+    return this.getCurrentUserRole() === Role.Admin;
+  }
+  isSuperuser() {
+    return this.getCurrentUserRole() === Role.Superuser;
+  }
+  isUser() {
+    return this.getCurrentUserRole() === Role.User;
   }
   isLoggedIn() {
     return !!this.getJwtToken();
   }
   refreshToken() {
-    return this.http.post<any>(`http:\\localhost:5001\refresh`, {
+    return this.http.post<any>("http:\\\\localhost:5000\\api\\login\\refresh", {
       'refreshToken': this.getRefreshToken()
     }).pipe(tap((tokens: Tokens) => {
       this.storeJwtToken(tokens.token);

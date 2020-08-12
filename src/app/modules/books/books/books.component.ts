@@ -15,6 +15,7 @@ import { AddDialogComponent } from '../dialogs/add-dialog/add-dialog.component';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { GenresService } from '../../../shared/services/genres.service';
 import { GenresDTO } from '../../../shared/repository/DTO/GenresDTO';
+import { AuthService } from '../../login/services/auth.service';
 
 @Component({
   selector: 'app-books',
@@ -22,19 +23,22 @@ import { GenresDTO } from '../../../shared/repository/DTO/GenresDTO';
   styleUrls: ['./books.component.scss']
 })
 export class BooksComponent implements OnInit, OnDestroy, AfterViewInit {
-  displayedColumns: string[] = ['id', 'name', 'author', 'publishingDate', 'genresName', 'notation', 'delete'];
+  displayedColumns: string[];
   data: BooksDTO[] = [];
   private booksSubscription: Subscription;
   deleteIcon: string;
   resultsLength = 0;
   isLoadingResults = false;
   isRateLimitReached = false;
+  isDeleteVisible = true;
+  isAddVisible = true; 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   controls: FormArray;
   genresItems: Observable<GenresDTO[]>;
 
   constructor(private booksService: BooksService,
+    private authService: AuthService,
     private genresService: GenresService,
     public dialog: MatDialog) { }
   ngAfterViewInit() {
@@ -75,6 +79,15 @@ export class BooksComponent implements OnInit, OnDestroy, AfterViewInit {
         this.controls = new FormArray(toGroups);
       })
   }
+  setDisplayedColumns(isDisplayDelete): string[] {
+    let res: string[];
+    if (isDisplayDelete) {
+      res = ['id', 'name', 'author', 'publishingDate', 'genresName', 'notation', 'delete'];
+    } else {
+      res = ['id', 'name', 'author', 'publishingDate', 'genresName', 'notation'];
+    }
+    return res;
+  }
   updateField(index, field) {
     const control = this.getControl(index, field);
     if (control.valid) {
@@ -87,6 +100,9 @@ export class BooksComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnInit(): void {
     this.deleteIcon = DELETE;
+    this.isAddVisible = this.authService.isAdmin();
+    this.isDeleteVisible = this.authService.isAdmin();
+    this.displayedColumns = this.setDisplayedColumns(this.isDeleteVisible);
   }
   ngOnDestroy(): void {
   }

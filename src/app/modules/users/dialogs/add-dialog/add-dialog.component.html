@@ -41,6 +41,13 @@
       Field is <strong>required</strong>
     </mat-error>
   </mat-form-field>
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+    <input matInput [(ngModel)]="data.password" [formControl]="getControl('password')" required>
+    <mat-error *ngIf="getControl('password').hasError('required')">
+      Field is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Close</button>

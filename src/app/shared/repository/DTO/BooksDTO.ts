@@ -13,4 +13,5 @@ export class BooksDTO extends AbstractDTO {
   genresId: number;
   notation: string;
   genresName: string;
+  isAvailable: boolean;
 }

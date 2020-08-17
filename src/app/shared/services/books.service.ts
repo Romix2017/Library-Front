@@ -3,7 +3,7 @@ import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { BooksDTO } from '../repository/DTO/BooksDTO';
 import { getAllBooks, deleteBook, addBook, updateBook } from '../store/books/books.actions';
-import { selectBooks, selectBooksJointGenres } from '../store/books/books.selectors';
+import { selectBooks, selectBooksJointGenres, selectBooksJointGenresOnlyAvailable } from '../store/books/books.selectors';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -17,6 +17,11 @@ export class BooksService {
     this.store.dispatch(getAllBooks());
     return this.store.pipe(
       select(selectBooksJointGenres));
+  }
+  getAllBooksOnlyAvailable(): Observable<BooksDTO[]> {
+    this.store.dispatch(getAllBooks());
+    return this.store.pipe(
+      select(selectBooksJointGenresOnlyAvailable));
   }
   getAllBooksStripped(): Observable<BooksDTO[]> {
     this.store.dispatch(getAllBooks());

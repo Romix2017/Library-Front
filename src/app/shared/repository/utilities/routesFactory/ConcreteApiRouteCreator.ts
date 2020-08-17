@@ -1,12 +1,13 @@
 import { AbstractDTO } from '../../DTO/AbstractDTO';
 import { AbstractApiRouteCreator } from './AbsractApiRouteCreator';
 import { AbstractApiRoute } from './AbsractApiRoute';
-import { Books_DTO, Roles_DTO, Genres_DTO, Users_DTO, BooksHistory_DTO } from '../../../const/dtoConst';
+import { Books_DTO, Roles_DTO, Genres_DTO, Users_DTO, BooksHistory_DTO, SimpleLogin_DTO } from '../../../const/dtoConst';
 import { BooksRoute } from './BooksRoute';
 import { RolesRoute } from './RolesRoute';
 import { GenresRoute } from './GenresRoute';
 import { UsersRoute } from './UsersRoute';
 import { BooksHistoryRoute } from './BooksHistoryRoute';
+import { LoginRoute } from './LoginRoute';
 
 export class ConcreteApiRouteCreator<T extends AbstractDTO> extends AbstractApiRouteCreator {
 
@@ -29,6 +30,9 @@ export class ConcreteApiRouteCreator<T extends AbstractDTO> extends AbstractApiR
       }
       case BooksHistory_DTO: {
         return new BooksHistoryRoute();
+      }
+      case SimpleLogin_DTO: {
+        return new LoginRoute();
       }
     }
   }

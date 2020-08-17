@@ -9,6 +9,7 @@ import { LoginDTO } from '../../../shared/repository/DTO/LoginDTO';
 import * as jwt_decode from "jwt-decode";
 import { Role } from '../../../shared/enums/role';
 import { TokenModel } from '../../../shared/repository/models/tokenModel';
+import { LoginRoute } from '../../../shared/repository/utilities/routesFactory/LoginRoute';
 @Injectable({
   providedIn: 'root'
 })
@@ -16,34 +17,34 @@ import { TokenModel } from '../../../shared/repository/models/tokenModel';
 export class AuthService {
   private readonly JWT_TOKEN = 'JWT_TOKEN';
   private readonly REFRESH_TOKEN = 'REFRESH_TOKEN';
-
+  private _loginRoute: LoginRoute;
   private loggedUser: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this._loginRoute = new LoginRoute();
+  }
 
   register(user: RegisterDTO): Observable<any> {
-    return this.http.post("http:\\\\localhost:5000\\api\\login\\register", user)
+    return this.http.post(this._loginRoute.RegisterLink(), user)
       .pipe(
         mapTo(true),
         catchError(error => {
-          alert(error.error);
           return of(false);
         })
       )
   }
   login(user: { username: string, password: string }): Observable<boolean> {
-    return this.http.post<any>("http:\\\\localhost:5000\\api\\login\\Authenticate", user)
+    return this.http.post<any>(this._loginRoute.LoginLink(), user)
       .pipe(tap(tokens => this.doLoginUser(user.username, tokens)),
         mapTo(true),
         catchError(error => {
-          alert(error.error);
           return of(false);
         }))
   }
   logout(): Observable<boolean> {
     let loginModel = new LoginDTO();
     loginModel.tokenString = this.getJwtToken();
-    return this.http.post<any>("http:\\\\localhost:5000\\api\\login\\revoke", loginModel).pipe(
+    return this.http.post<any>(this._loginRoute.LogoutLink(), loginModel).pipe(
       tap(() => this.doLogoutUser()),
       mapTo(true),
       catchError(error => {
@@ -87,7 +88,7 @@ export class AuthService {
     return !!this.getJwtToken();
   }
   refreshToken() {
-    return this.http.post<any>("http:\\\\localhost:5000\\api\\login\\refresh", {
+    return this.http.post<any>(this._loginRoute.RefreshLink(), {
       'refreshToken': this.getRefreshToken()
     }).pipe(tap((tokens: Tokens) => {
       this.storeJwtToken(tokens.token);

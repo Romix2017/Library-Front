@@ -50,7 +50,7 @@ export class BooksComponent implements OnInit, OnDestroy, AfterViewInit {
         delay(0),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.booksService.getAllBooks()
+          return this.booksService.getAllBooksOnlyAvailable()
         }),
         map(data => {
           this.isLoadingResults = false;

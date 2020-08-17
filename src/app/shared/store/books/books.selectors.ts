@@ -11,8 +11,25 @@ export const selectBooks = createSelector(selectBooksState, (state: BooksStore) 
 export const selectBooksJointGenres = createSelector(selectBooksState, selectGenresState, (bookStore: BooksStore, genresStore: GenresStore) => {
   return JoinBookAndGenre(bookStore.BooksState, genresStore);
 })
+export const selectBooksJointGenresOnlyAvailable = createSelector(selectBooksState, selectGenresState, (bookStore: BooksStore, genresStore: GenresStore) => {
+  return JoinBookAndGenreOnlyAvailable(bookStore.BooksState, genresStore);
+})
 function JoinBookAndGenre(booksArray: BooksDTO[], genresStore: GenresStore) {
   let newArray = booksArray.map(x => {
+    let newBook = new BooksDTO();
+    newBook.genresName = genresStore.GenresState.find(y => y.id == x.genresId).name;
+    newBook.author = x.author;
+    newBook.genresId = x.genresId;
+    newBook.id = x.id;
+    newBook.name = x.name;
+    newBook.notation = x.notation;
+    newBook.publishingDate = x.publishingDate;
+    return newBook;
+  });
+  return newArray;
+}
+function JoinBookAndGenreOnlyAvailable(booksArray: BooksDTO[], genresStore: GenresStore) {
+  let newArray = booksArray.filter(y => y.isAvailable === true).map(x => {
     let newBook = new BooksDTO();
     newBook.genresName = genresStore.GenresState.find(y => y.id == x.genresId).name;
     newBook.author = x.author;

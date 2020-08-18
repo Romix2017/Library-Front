@@ -31,7 +31,7 @@ export class BooksComponent implements OnInit, OnDestroy, AfterViewInit {
   isLoadingResults = false;
   isRateLimitReached = false;
   isDeleteVisible = true;
-  isAddVisible = true; 
+  isAddVisible = true;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   controls: FormArray;
@@ -50,7 +50,9 @@ export class BooksComponent implements OnInit, OnDestroy, AfterViewInit {
         delay(0),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.booksService.getAllBooksOnlyAvailable()
+          return this.getBooks(this.toShowAllBooks());
+          //return this.booksService.getAllBooksOnlyAvailable()
+          //return this.booksService.getAllBooks()
         }),
         map(data => {
           this.isLoadingResults = false;
@@ -73,11 +75,26 @@ export class BooksComponent implements OnInit, OnDestroy, AfterViewInit {
             publishingDate: new FormControl(entity.publishingDate, Validators.required),
             genresId: new FormControl(entity.genresId),
             genresName: new FormControl(entity.genresName),
-            notation: new FormControl(entity.notation)
+            notation: new FormControl(entity.notation),
+            isAvailable: new FormControl(entity.isAvailable)
           }, { updateOn: "blur" })
         });
         this.controls = new FormArray(toGroups);
       })
+  }
+  toShowAllBooks() {
+    let res: boolean;
+    res = !!this.authService.isAdmin();
+    return res;
+  }
+  getBooks(showAllBooks): Observable<BooksDTO[]> {
+    let res: Observable<BooksDTO[]>;
+    if (showAllBooks) {
+      res = this.booksService.getAllBooks();
+    } else {
+      res = this.booksService.getAllBooksOnlyAvailable();
+    }
+    return res;
   }
   setDisplayedColumns(isDisplayDelete): string[] {
     let res: string[];
@@ -92,7 +109,8 @@ export class BooksComponent implements OnInit, OnDestroy, AfterViewInit {
     const control = this.getControl(index, field);
     if (control.valid) {
       let myBook = this.controls.at(index).value as BooksDTO;
-      this.booksService.updateBook(myBook);
+      console.log(myBook);
+      //this.booksService.updateBook(myBook);
     }
   }
   getControl(index, fieldName) {
@@ -116,7 +134,9 @@ export class BooksComponent implements OnInit, OnDestroy, AfterViewInit {
       data: newBook
     });
     dialogRef.afterClosed().subscribe(book => {
-      this.booksService.addBook(book);
+      if (book) {
+        this.booksService.addBook(book);
+      }
     })
   }
 }

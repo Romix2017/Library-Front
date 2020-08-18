@@ -95,8 +95,10 @@ export class UsersComponent implements OnInit {
       width: '300px',
       data: newUser
     });
-    dialogRef.afterClosed().subscribe(book => {
-      this.usersService.addUser(newUser);
+    dialogRef.afterClosed().subscribe(user => {
+      if (user) {
+        this.usersService.addUser(user);
+      }
     })
   }
 

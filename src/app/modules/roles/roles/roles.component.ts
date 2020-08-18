@@ -79,13 +79,15 @@ export class RolesComponent implements OnInit {
     this.rolesService.deleteRole(id);
   }
   addNewRole(): void {
-    let newBook = new RolesDTO();
+    let newRole = new RolesDTO();
     let dialogRef: MatDialogRef<AddDialogComponent, RolesDTO> = this.dialog.open(AddDialogComponent, {
       width: '300px',
-      data: newBook
+      data: newRole
     });
     dialogRef.afterClosed().subscribe(role => {
-      this.rolesService.addRole(role);
+      if (role) {
+        this.rolesService.addRole(role);
+      }
     })
   }
 }

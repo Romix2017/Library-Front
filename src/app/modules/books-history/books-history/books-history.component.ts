@@ -20,7 +20,7 @@ import { UsersService } from '../../../shared/services/users.services';
   styleUrls: ['./books-history.component.scss']
 })
 export class BooksHistoryComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'booksId', 'usersId', 'dateGiven', 'dateReturned', 'notes', 'delete'];
+  displayedColumns: string[] = ['id', 'booksId', 'usersId', 'dateGiven', 'dateReturned', 'notes'];
   data: BooksHistoryDTO[] = [];
   private booksSubscription: Subscription;
   deleteIcon: string;
@@ -91,17 +91,16 @@ export class BooksHistoryComponent implements OnInit {
   }
   ngOnDestroy(): void {
   }
-  deleteItem(id: number): void {
-    this.booksHistoryService.deleteBookHistory(id);
-  }
   addNewBookHistory(): void {
     let newBookHistory = new BooksHistoryDTO();
     let dialogRef: MatDialogRef<AddDialogComponent, BooksHistoryDTO> = this.dialog.open(AddDialogComponent, {
       width: '300px',
       data: newBookHistory
     });
-    dialogRef.afterClosed().subscribe(book => {
-      this.booksHistoryService.addBookHistory(book);
+    dialogRef.afterClosed().subscribe(bookHistory => {
+      if (bookHistory) {
+        this.booksHistoryService.addBookHistory(bookHistory);
+      }
     })
   }
 }

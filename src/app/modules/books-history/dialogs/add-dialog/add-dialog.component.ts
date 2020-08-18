@@ -34,7 +34,7 @@ export class AddDialogComponent implements OnInit {
     }
   }
   ngOnInit() {
-    this.booksItems = this.booksService.getAllBooksStripped();
+    this.booksItems = this.booksService.getBooksOnlyAvailableStripped();
     this.usersItems = this.usersService.getAllUsersStripped();
     this.formGroup = new FormGroup({
       id: new FormControl(this.data.id),

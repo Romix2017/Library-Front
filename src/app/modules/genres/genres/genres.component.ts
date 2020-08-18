@@ -81,13 +81,15 @@ export class GenresComponent implements OnInit {
     this.genresService.deleteGenre(id);
   }
   addNewGenre(): void {
-    let newBook = new GenresDTO();
+    let newGenre = new GenresDTO();
     let dialogRef: MatDialogRef<AddDialogComponent, GenresDTO> = this.dialog.open(AddDialogComponent, {
       width: '300px',
-      data: newBook
+      data: newGenre
     });
-    dialogRef.afterClosed().subscribe(role => {
-      this.genresService.addGenre(role);
+    dialogRef.afterClosed().subscribe(genre => {
+      if (genre) {
+        this.genresService.addGenre(genre);
+      }
     })
   }
 }

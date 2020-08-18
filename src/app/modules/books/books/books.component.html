@@ -76,12 +76,12 @@
         <th mat-header-cell *matHeaderCellDef>
           Delete
         </th>
-        <td mat-cell *matCellDef="let row">
-          <button mat-button color="primary" (click)="deleteItem(row.id)"><mat-icon>{{deleteIcon}}</mat-icon></button>
+        <td mat-cell *matCellDef="let row; let index = index">
+          <button mat-button color="primary" (click)="deleteItem(index)"><mat-icon>{{deleteIcon}}</mat-icon></button>
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-row [ngClass]="{'not-available': row.isAvailable == false}"  *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
   <mat-toolbar>

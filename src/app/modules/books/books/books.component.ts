@@ -109,8 +109,7 @@ export class BooksComponent implements OnInit, OnDestroy, AfterViewInit {
     const control = this.getControl(index, field);
     if (control.valid) {
       let myBook = this.controls.at(index).value as BooksDTO;
-      console.log(myBook);
-      //this.booksService.updateBook(myBook);
+      this.booksService.updateBook(myBook);
     }
   }
   getControl(index, fieldName) {
@@ -124,8 +123,8 @@ export class BooksComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy(): void {
   }
-  deleteItem(id: number): void {
-    this.booksService.deleteBook(id);
+  deleteItem(index: number): void {
+    this.booksService.deleteBook(this.controls.at(index).value as BooksDTO);
   }
   addNewBook(): void {
     let newBook = new BooksDTO();
